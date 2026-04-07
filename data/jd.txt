@@ -1,0 +1,9 @@
+We are looking for an AI/ML Intern with strong foundations in Python, Artificial Intelligence, and Machine Learning.
+
+The candidate should have knowledge of data structures, object-oriented programming, and backend development. Experience with frameworks like Django and familiarity with databases such as SQL and MySQL is preferred.
+
+The ideal candidate should have worked with libraries like NumPy, Pandas, and have conceptual understanding of Scikit-learn. Exposure to Large Language Models (LLMs), prompt engineering, and AI deployment concepts is a plus.
+
+Experience with version control tools such as Git and GitHub is required. The candidate should have hands-on project experience involving backend development and database integration.
+
+Strong problem-solving skills, analytical thinking, and willingness to learn new technologies are essential.

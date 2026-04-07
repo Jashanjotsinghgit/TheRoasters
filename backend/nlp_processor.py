@@ -1,6 +1,6 @@
 import spacy
-from resume_parser import extract_text
-from resume_parser import pdf_path as path
+from backend.resume_parser import extract_text
+from backend.resume_parser import pdf_path as path
 nlp = spacy.load("en_core_web_sm")
 
 def process_text(text):
