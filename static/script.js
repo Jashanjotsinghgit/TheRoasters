@@ -155,24 +155,49 @@ function removeFile() {
 
 // Analyze Resume
 function analyzeResume() {
-  // Show loading
   loadingOverlay.classList.add('active');
 
-  // Simulate API call
-  setTimeout(() => {
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please upload a file first");
     loadingOverlay.classList.remove('active');
-    showAnalysis();
-  }, 2000);
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  fetch("/analyze-resume", {
+    method: "POST",
+    body: formData
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Server error");
+      }
+      return response.json();
+    })
+    .then(data => {
+      loadingOverlay.classList.remove('active');
+
+      // IMPORTANT: overwrite your existing variable
+      Object.assign(analysisData, data);
+      console.log(data)
+      showAnalysis(data);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      loadingOverlay.classList.remove('active');
+      alert("Something went wrong while analyzing resume.");
+    });
 }
 
-// Show Analysis Dashboard
-function showAnalysis() {
+function showAnalysis(data) {
   hideAllSections();
   step3.classList.add('active');
   updateSteps(3);
-
-  // Update UI with data
-  updateAnalysisUI(analysisData);
+  updateAnalysisUI(data); // use fresh API data
 }
 
 function updateAnalysisUI(data) {

@@ -1,6 +1,6 @@
 import os
 import shutil
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from backend.embeddings_generator import generate_embedding
 from backend.resume_parser import extract_text
@@ -44,25 +44,24 @@ def save_to_db(data):
 
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"message": "Resume Intelligence API Running"})
+    return render_template('clientside.html')
+    # return jsonify({"message": "Resume Intelligence API Running"})
 
 @app.route("/analyze-resume", methods=["POST", "GET"])
 def analyze_resume():
-    # # Flask uses request.files for file uploads
-    # if 'file' not in request.files:
-    #     return jsonify({"error": "No file part"}), 400
+    # Flask uses request.files for file uploads
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
     
-    # file = request.files['file']
+    file = request.files['file']
     
-    # if file.filename == '':
-    #     return jsonify({"error": "No selected file"}), 400
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
 
-    # # Save uploaded file
-    # file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    # file.save(file_path)
+    # Save uploaded file
+    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(file_path)
 
-    # Extract text
-    file_path = pdf_path
     resume_text = extract_text(file_path)
 
     # Extract name
@@ -124,12 +123,12 @@ def analyze_resume():
     # Returning JSON response
     return jsonify({
         "name": name,
-        "semantic_score": round(float(semantic_score), 2),
-        "skill_score": round(float(skill_score), 2),
-        "final_score": round(float(final_score), 2),
+        "semantic": round(float(semantic_score), 2),
+        "skill": round(float(skill_score), 2),
+        "final": round(float(final_score), 2),
         "category": category,
-        "missing_skills": missing_skills, 
-        "matched_skills": resume_skills
+        "missing": missing_skills, 
+        "matched": resume_skills
     })
 
 if __name__ == "__main__":
