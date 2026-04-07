@@ -15,7 +15,7 @@ from backend.insight_engine import (
 )
 from backend.skill_extractor import extract_skills
 from backend.database import SessionLocal
-from backend.models import Candidate
+from backend.models import Candidate, Job
 from backend.resume_parser import pdf_path
 
 app = Flask(__name__)
@@ -116,8 +116,6 @@ def analyze_resume():
         "matched": resume_skills,
         "missing": missing_skills
     }
-
-
     save_to_db(data)
 
     # Returning JSON response
@@ -130,6 +128,23 @@ def analyze_resume():
         "missing": missing_skills, 
         "matched": resume_skills
     })
+
+@app.route("/jobs", methods=["GET"])
+def get_jobs():
+    db = SessionLocal()
+    jobs = db.query(Job).all()
+
+    job_list = []
+    for job in jobs:
+        job_list.append({
+            "id": job.id,
+            "title": job.title,
+            "description": job.description,
+            "mandatory_skills": job.mandatory_skills.split(","),
+            "optional_skills": job.optional_skills.split(",")
+        })
+    
+    return jsonify(job_list)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

@@ -1,4 +1,8 @@
 // Mock data (simulating backend response)
+let jobsData = [];
+let selectedJobId = null;
+let selectedJobData = null;
+
 const analysisData = {
   name: "Jashan",
   semantic: 0.52,
@@ -283,7 +287,83 @@ function updateAnalysisUI(data) {
   ).join('');
 }
 
+function renderJobs(jobs) {
+  const container = document.getElementById("jobContainer");
+
+  container.innerHTML = jobs.map(job => `
+    <div class="job-card">
+      <div class="job-header">
+        <h2 class="job-title">${job.title}</h2>
+        <span class="job-badge">Full Time</span>
+      </div>
+
+      <p class="job-description-short">
+        ${job.description.substring(0, 120)}...
+      </p>
+
+      <div class="skills-preview">
+        ${job.mandatory_skills.slice(0, 3).map(skill =>
+          `<span class="skill-tag">${skill}</span>`
+        ).join('')}
+        <span class="skill-tag-more">
+          +${Math.max(0, job.mandatory_skills.length - 3)} more
+        </span>
+      </div>
+
+      <button class="btn btn-primary" onclick="selectJob(${job.id})">
+        See More
+      </button>
+    </div>
+    <br>
+  `).join('');
+}
+
+function loadJobs() {
+  console.log("Hello");
+  fetch("/jobs")
+    .then(res => res.json())
+    .then(data => {
+      jobsData = data;
+      console.log(jobsData);
+      renderJobs(jobsData);
+    })
+    .catch(err => {
+      console.error("Failed to load jobs:", err);
+    });
+}
+
+function selectJob(jobId) {
+  selectedJobId = jobId;
+  selectedJobData = jobsData.find(j => j.id === jobId);
+
+  updateJobDetailsUI(selectedJobData);
+  showJobDetails();
+}
+
+function updateJobDetailsUI(job) {
+  document.getElementById("detailTitle").textContent = job.title;
+  document.getElementById("detailDescription").textContent = job.description;
+
+  // Mandatory Skills
+  document.getElementById("mandatorySkills").innerHTML =
+    job.mandatory_skills.map(skill =>
+      `<span class="skill-tag mandatory">${skill}</span>`
+    ).join('');
+
+  // Optional Skills
+  document.getElementById("optionalSkills").innerHTML =
+    job.optional_skills.map(skill =>
+      `<span class="skill-tag optional">${skill}</span>`
+    ).join('');
+
+  // Certification
+  document.getElementById("certificationInfo").textContent =
+    job.certification_enabled
+      ? `Certification Enabled (Weight: ${job.certification_weight * 100}%)`
+      : "No Certification Required";
+}
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   updateSteps(1);
+  loadJobs();
 });

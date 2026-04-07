@@ -33,96 +33,52 @@
     </div>
 
     <!-- Step 1: Job Description -->
-    <section id="step1" class="section active">
-      <div class="job-card">
-        <div class="job-header">
-          <h2 class="job-title">Machine Learning Engineer</h2>
-          <span class="job-badge">Full Time</span>
-        </div>
-        <p class="job-description-short">
-          We are looking for a skilled Machine Learning Engineer to join our team and help build 
-          cutting-edge AI solutions...
-        </p>
-        <div class="skills-preview">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Machine Learning</span>
-          <span class="skill-tag">Django</span>
-          <span class="skill-tag-more">+8 more</span>
-        </div>
-        <button class="btn btn-primary" onclick="showJobDetails()">See More</button>
-      </div>
-    </section>
+   <section id="step1" class="section active">
+  <div id="jobContainer"></div>
+</section>
 
     <!-- Step 1.5: Job Details Modal -->
     <section id="jobDetails" class="section">
-      <div class="job-details-card">
-        <button class="btn-back" onclick="goBack()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          Back to Jobs
-        </button>
-        
-        <div class="job-header">
-          <h2 class="job-title">Machine Learning Engineer</h2>
-          <span class="job-badge">Full Time</span>
-        </div>
+  <div class="job-details-card">
+    
+    <button class="btn-back" onclick="goBack()">Back to Jobs</button>
+    
+    <div class="job-header">
+      <h2 class="job-title" id="detailTitle"></h2>
+      <span class="job-badge" id="detailType">Full Time</span>
+    </div>
 
-        <div class="job-section">
-          <h3>Description</h3>
-          <p>
-            We are looking for a skilled Machine Learning Engineer to join our team and help build 
-            cutting-edge AI solutions. You will work on developing, training, and deploying machine 
-            learning models to solve real-world problems. Experience with deep learning frameworks 
-            and cloud platforms is a plus.
-          </p>
-        </div>
+    <div class="job-section">
+      <h3>Description</h3>
+      <p id="detailDescription"></p>
+    </div>
 
-        <div class="job-section">
-          <h3>Mandatory Skills</h3>
-          <div class="skills-list">
-            <span class="skill-tag mandatory">Python</span>
-            <span class="skill-tag mandatory">Machine Learning</span>
-            <span class="skill-tag mandatory">Django</span>
-            <span class="skill-tag mandatory">MySQL</span>
-            <span class="skill-tag mandatory">NumPy</span>
-            <span class="skill-tag mandatory">Pandas</span>
-            <span class="skill-tag mandatory">Scikit-learn</span>
-          </div>
-        </div>
+    <div class="job-section">
+      <h3>Mandatory Skills</h3>
+      <div class="skills-list" id="mandatorySkills"></div>
+    </div>
 
-        <div class="job-section">
-          <h3>Optional Skills</h3>
-          <div class="skills-list">
-            <span class="skill-tag optional">LLM</span>
-            <span class="skill-tag optional">Prompt Engineering</span>
-            <span class="skill-tag optional">Git</span>
-            <span class="skill-tag optional">GitHub</span>
-          </div>
-        </div>
+    <div class="job-section">
+      <h3>Optional Skills</h3>
+      <div class="skills-list" id="optionalSkills"></div>
+    </div>
 
-        <div class="job-section">
-          <h3>Certification</h3>
-          <p class="certification-info">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            Certification Enabled (Weight: 0%)
-          </p>
-        </div>
+    <div class="job-section">
+      <h3>Certification</h3>
+      <p class="certification-info" id="certificationInfo"></p>
+    </div>
 
-        <button class="btn btn-primary btn-large" onclick="showUpload()">
-          Upload Resume
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-        </button>
-      </div>
-    </section>
-
+  </div>
+  <button class="btn btn-primary btn-large" onclick="showUpload()">
+    Upload Resume
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="17 8 12 3 7 8"/>
+      <line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>
+  </button>
+</section>
+    
     <!-- Step 2: Resume Upload -->
     <section id="step2" class="section">
       <div class="upload-card">

@@ -1,13 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# SQLite database (file-based)
+from backend.models import Base
+from sqlalchemy import create_engine
 
-DATABASE_URL = "sqlite:///resume.db"
-
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
+engine = create_engine("sqlite:///resume.db")
+Base.metadata.create_all(engine)
 
 SessionLocal = sessionmaker(bind=engine)
