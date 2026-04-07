@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Portal - Create Job Description</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 7h-9"/>
+                        <path d="M14 17H5"/>
+                        <circle cx="17" cy="17" r="3"/>
+                        <circle cx="7" cy="7" r="3"/>
+                    </svg>
+                </div>
+                <span>ResumeMatch</span>
+            </div>
+            <nav class="nav-links">
+                <a href="admin.html" class="active">Create Job</a>
+                <a href="#">All Jobs</a>
+                <a href="#">Analytics</a>
+                <a href="index.html">User Portal</a>
+            </nav>
+        </header>
+
+        <!-- Page Title -->
+        <div class="page-header">
+            <h1>Create Job Description</h1>
+            <p>Fill in the job details below. All fields with * are required.</p>
+        </div>
+
+        <!-- Job Form -->
+        <div class="form-container">
+            <form id="jobForm" class="job-form">
+                <!-- Basic Information Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </span>
+                        Basic Information
+                    </h2>
+
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title *</label>
+                        <input type="text" id="jobTitle" name="title" placeholder="e.g., Senior Software Engineer" required>
+                        <span class="helper-text">Enter a clear and specific job title</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jobDescription">Job Description *</label>
+                        <textarea id="jobDescription" name="description" rows="6" placeholder="Describe the role, responsibilities, and what a typical day looks like..." required></textarea>
+                        <span class="helper-text">Provide a detailed description of the role (minimum 100 characters)</span>
+                        <span class="char-count"><span id="descCharCount">0</span> characters</span>
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </span>
+                        Required Skills
+                    </h2>
+
+                    <div class="form-group">
+                        <label for="mandatorySkills">Mandatory Skills *</label>
+                        <div class="skills-input-container">
+                            <input type="text" id="mandatorySkillInput" placeholder="Type a skill and press Enter">
+                            <button type="button" class="add-skill-btn" onclick="addMandatorySkill()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Add
+                            </button>
+                        </div>
+                        <div id="mandatorySkillsTags" class="skills-tags"></div>
+                        <input type="hidden" id="mandatorySkills" name="mandatory_skills">
+                        <span class="helper-text">Add skills that are absolutely required for this position</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="optionalSkills">Optional Skills</label>
+                        <div class="skills-input-container">
+                            <input type="text" id="optionalSkillInput" placeholder="Type a skill and press Enter">
+                            <button type="button" class="add-skill-btn secondary" onclick="addOptionalSkill()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Add
+                            </button>
+                        </div>
+                        <div id="optionalSkillsTags" class="skills-tags optional"></div>
+                        <input type="hidden" id="optionalSkills" name="optional_skills">
+                        <span class="helper-text">Add nice-to-have skills that would be a bonus</span>
+                    </div>
+                </div>
+
+                <!-- Certification Section -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="7"/>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                            </svg>
+                        </span>
+                        Certification Settings
+                    </h2>
+
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="certificationEnabled" name="certification_enabled">
+                                <span class="toggle-switch"></span>
+                                <span class="toggle-text">Enable Certification Matching</span>
+                            </label>
+                            <span class="helper-text">Consider certifications when matching candidates</span>
+                        </div>
+
+                        <div class="form-group" id="certWeightGroup">
+                            <label for="certificationWeight">Certification Weight</label>
+                            <div class="range-container">
+                                <input type="range" id="certificationWeight" name="certification_weight" min="0" max="100" value="0">
+                                <span class="range-value" id="certWeightValue">0%</span>
+                            </div>
+                            <span class="helper-text">How much should certifications impact the matching score (0-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="form-section preview-section" id="previewSection" style="display: none;">
+                    <h2 class="section-title">
+                        <span class="section-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </span>
+                        JSON Preview
+                    </h2>
+                    <pre id="jsonPreview" class="json-preview"></pre>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="previewJSON()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        Preview JSON
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="resetForm()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="1 4 1 10 7 10"/>
+                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                        </svg>
+                        Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
+                        Save Job Description
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-icon success">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h3>Job Description Saved!</h3>
+                <p>Your job description has been created successfully.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="closeModal()">Create Another</button>
+                    <button class="btn btn-primary" onclick="viewJobs()">View All Jobs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
